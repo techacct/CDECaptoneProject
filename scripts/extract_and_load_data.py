@@ -2,6 +2,7 @@ import requests
 import pandas as pd
 import pyarrow as pa
 import pyarrow.parquet as pq
+from sqlalchemy import create_engine
 import boto3
 from botocore.exceptions import NoCredentialsError
 
@@ -13,6 +14,7 @@ def fetch_api_data(url):
 def store_raw_data_parquet(data, output_path):
     table = pa.Table.from_pandas(pd.DataFrame(data))
     pq.write_table(table, output_path)
+
 
 def upload_to_s3(file_path, bucket_name, s3_key):
     s3 = boto3.client('s3')
